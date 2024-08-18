@@ -1,0 +1,35 @@
+CREATE TABLE IF NOT EXISTS users (
+	dni INTEGER,
+	is_active BOOLEAN NOT NULL DEFAULT true,
+
+	CONSTRAINT pk_users_dni PRIMARY KEY (dni)
+);
+
+CREATE TABLE IF NOT EXISTS active_users (
+	dni INTEGER,
+	username TEXT UNIQUE NOT NULL,
+	password TEXT NOT NULL,
+	kind TEXT NOT NULL,
+
+	CONSTRAINT pk_active_users PRIMARY KEY (dni),
+	CONSTRAINT fk_active_users_dni FOREIGN KEY (dni)
+	REFERENCES users(dni) ON UPDATE CASCADE 
+	ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS inactive_users (
+	dni INTEGER,
+	username TEXT UNIQUE NOT NULL,
+	password TEXT NOT NULL,
+	kind TEXT NOT NULL,
+
+	CONSTRAINT pk_inactive_users PRIMARY KEY (dni),
+	CONSTRAINT fk_inactive_users_dni FOREIGN KEY (dni)
+	REFERENCES users(dni) ON UPDATE CASCADE
+	ON DELETE CASCADE
+);
+
+
+SELECT * FROM users;
+SELECT * FROM active_users;
+SELECT * FROM inactive_users;
